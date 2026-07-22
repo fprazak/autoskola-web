@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>Autoškola 2027 — potvrzení účtu</title>
+  <style>
+    :root { color-scheme: light dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; min-height: 100vh; display: flex; align-items: center;
+      justify-content: center; padding: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f1f5f9; color: #0f172a;
+    }
+    @media (prefers-color-scheme: dark) {
+      body { background: #0f172a; color: #e2e8f0; }
+      .card { background: #1e293b !important; }
+      .muted { color: #94a3b8 !important; }
+    }
+    .card {
+      background: #ffffff; border-radius: 20px; padding: 32px 28px;
+      max-width: 420px; width: 100%; text-align: center;
+      box-shadow: 0 10px 40px rgba(2, 6, 23, 0.12);
+    }
+    .badge {
+      width: 72px; height: 72px; border-radius: 999px; margin: 0 auto 18px;
+      display: flex; align-items: center; justify-content: center; font-size: 34px;
+      background: linear-gradient(135deg, #2563eb, #1e40af); color: #fff;
+    }
+    h1 { font-size: 20px; margin: 0 0 8px; }
+    p { margin: 0 0 18px; line-height: 1.5; }
+    .muted { color: #64748b; font-size: 14px; }
+    a.button {
+      display: inline-block; text-decoration: none; font-weight: 700;
+      background: #2563eb; color: #fff; padding: 14px 22px; border-radius: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="badge">🚗</div>
+    <h1>Účet potvrzen</h1>
+    <p>Otevíráme aplikaci Autoškola 2027 a přihlašujeme tě…</p>
+    <p><a class="button" id="openApp" href="#">Otevřít aplikaci</a></p>
+    <p class="muted">
+      Pokud se aplikace neotevřela automaticky, klikni na tlačítko výše.
+      Odkaz musíš otevřít na stejném telefonu, na kterém ses registroval/a.
+    </p>
+  </div>
+  <script>
+    // Supabase redirects here after verifying the token. In the PKCE flow the
+    // one-time code arrives as ?code=...; older flows use a #access_token=...
+    // fragment. Forward BOTH to the app's custom scheme so supabase_flutter can
+    // complete the session and sign the user in automatically.
+    var SCHEME = "com.reinspiro.app.autoskola2027://login-callback/";
+    var target = SCHEME + window.location.search + window.location.hash;
+    document.getElementById("openApp").setAttribute("href", target);
+    // Auto-open (a tiny delay lets the page paint first).
+    setTimeout(function () { window.location.replace(target); }, 400);
+  </script>
+</body>
+</html>
